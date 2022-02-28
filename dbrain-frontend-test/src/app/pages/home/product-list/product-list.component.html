@@ -1,14 +1,23 @@
 <div class="row">
+    <div class="input-group mb-4">
+        <input type="search" class="form-control rounded" placeholder="Find product by name" aria-label="Search" aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 d-flex align-items-stretch mb-3">
+           <span *ngFor="let category of categories" class="badge bg-primary me-3"><a routerLink="/category/{{ category }}">{{ category }}</a></span>
+        </div>
+    </div>
     <div *ngFor="let product of products" class="col-sm-2 d-flex align-items-stretch">
         <div class="card mb-3">
             <img [src]="product.image" class="card-img-top" height="60%">
             <div class="card-body">
                 <h5 class="card-title">{{ product.title }}</h5>
                 <p class="card-text">{{ product.category }}</p>
+                <p class="card-text">{{ product.price | currency: 'USD' }}</p>
             </div>
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <button class="btn btn-primary float-end">Buy</button>
             </div>
         </div>
     </div>
