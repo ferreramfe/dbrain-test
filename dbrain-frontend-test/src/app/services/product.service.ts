@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collectionGroup, getDocs } from '@angular/fire/firestore';
+import { Firestore, collectionData, collectionGroup, getDocs, doc, docData } from '@angular/fire/firestore';
 import { collection, Query, query, where } from "@firebase/firestore";
 
 import { Observable } from 'rxjs';
@@ -27,6 +27,11 @@ export class ProductService {
     const products = collection(this.fireStore, 'products');
     const q = query(products, where('title', '>', keyword), where('title', '<', keyword + '\uf8ff'));
     return this.getCollectionData(q);
+  }
+
+  getProductById(id: string): Observable<Product>{
+    const productsRef = doc(this.fireStore, `products/${id}`);  
+    return docData(productsRef, { idField: 'id' }) as Observable<Product>;
   }
 
   getCollectionData(query: Query): Observable<Product[]> {
