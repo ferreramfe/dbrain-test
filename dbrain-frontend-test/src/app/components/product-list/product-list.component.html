@@ -1,9 +1,13 @@
 <div class="row">
     <div *ngFor="let product of products" class="col-sm-2 d-flex align-items-stretch">
         <div class="card mb-3">
-            <img [src]="product.image" class="card-img-top" height="60%">
+            <a routerLink="/products/{{ product.id }}">
+                <img [src]="product.image" class="card-img-top" height="60%">
+            </a>
             <div class="card-body">
-                <h5 class="card-title">{{ product.title }}</h5>
+                <a routerLink="/products/{{ product.id }}">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                </a>
                 <p class="card-text">{{ product.category }}</p>
                 <p class="card-text">{{ product.price | currency: 'USD' }}</p>
             </div>
