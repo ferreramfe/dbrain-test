@@ -7,7 +7,13 @@
     </form>
   </div>
 </nav>
-
+<div class="row">
+  <div class="input-group mb-4">
+    <input type="search" class="form-control rounded" placeholder="Find product by name" aria-label="Search" aria-describedby="search-addon" />
+    <button type="button" class="btn btn-outline-primary">search</button>
+  </div>
+  <app-product-category-list></app-product-category-list>
+</div>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
