@@ -15,6 +15,12 @@
     padding: 30px
 }
 
+.price-hp {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(139, 139, 139)
+}
+
 .text-dark {
     text-decoration:none;
 }
