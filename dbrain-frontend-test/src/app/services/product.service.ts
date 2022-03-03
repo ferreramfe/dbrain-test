@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collectionGroup, getDocs, doc, docData } from '@angular/fire/firestore';
-import { collection, Query, query, where } from "@firebase/firestore";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore'
 import { map, Observable } from 'rxjs';
 import { Product } from '../common/product';
@@ -14,7 +12,7 @@ export class ProductService {
   private dbPath: string = '/products';
   productsRef: AngularFirestoreCollection<Product>; 
 
-  constructor(private fireStore: Firestore, private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore) {
     this.productsRef = afs.collection(this.dbPath);
   }
   getList(): Observable<Product[]> {
