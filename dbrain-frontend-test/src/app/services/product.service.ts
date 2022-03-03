@@ -1,21 +1,55 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection } from "@firebase/firestore";
-
-import { Observable } from 'rxjs';
+import { Firestore, collectionData, collectionGroup, getDocs, doc, docData } from '@angular/fire/firestore';
+import { collection, Query, query, where } from "@firebase/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore'
+import { map, Observable } from 'rxjs';
 import { Product } from '../common/product';
+import { convertSnaps } from './shared/util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(
-    private fireStore: Firestore 
-  ) {}
+  private dbPath: string = '/products';
+  productsRef: AngularFirestoreCollection<Product>; 
 
-  getProductList(): Observable<Product[]> {
-    const products = collection(this.fireStore, 'products')
-    return collectionData(products)
+  constructor(private fireStore: Firestore, private afs: AngularFirestore) {
+    this.productsRef = afs.collection(this.dbPath);
   }
+  getList(): Observable<Product[]> {
+    return this.afs.collection(this.dbPath)
+      .get().pipe(
+        map(res => convertSnaps<Product>(res))
+      )
+  }
+
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.afs.collection(
+      this.dbPath,
+      ref => ref.where('category', 'array-contains', category)
+    )
+      .get().pipe(
+        map(res => convertSnaps<Product>(res))
+      )
+  }
+
+  getProductsByKeyWord(keyword: string): Observable<Product[]> {
+    return this.afs.collection(
+      this.dbPath,
+      ref => ref.where('title', '>', keyword).where('title', '<', keyword + '\uf8ff')
+    )
+      .get().pipe(
+        map(res => convertSnaps<Product>(res))
+      );
+  }
+
+  getProductById(id: string): AngularFirestoreDocument<Product> {
+    return this.productsRef.doc(id)
+  }
+
+  getProductByProductId(id: number): AngularFirestoreCollection<Product> {   
+    return this.afs.collection(this.dbPath, ref => ref.where('id', '==', id));
+  }
+
 }

@@ -1,0 +1,5 @@
+<nav *ngIf="showCategories===true" aria-label="breadcrumb" class="first d-block">
+    <ol class="breadcrumb">
+        <li *ngFor="let category of productCategories" class="breadcrumb-item mb-2"><a class="black-text active-2" routerLink="/category/{{category.category}}"><span>{{category.category}}</span></a></li>
+    </ol>
+</nav>
