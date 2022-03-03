@@ -1,3 +1,5 @@
-<div class="col-sm-2 d-flex align-items-stretch mb-3">
-    <span *ngFor="let category of productCategories" class="badge bg-primary me-3"><a routerLink="/category/{{category.category}}">{{category.category}}</a></span>
- </div>
+<nav *ngIf="showCategories===true" aria-label="breadcrumb" class="first d-block">
+    <ol class="breadcrumb">
+        <li *ngFor="let category of productCategories" class="breadcrumb-item mb-2"><a class="black-text active-2" routerLink="/category/{{category.category}}"><span>{{category.category}}</span></a></li>
+    </ol>
+</nav>

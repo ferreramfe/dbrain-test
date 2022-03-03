@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore';
 import { collection, query, where } from "@firebase/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore'
 
 import { Observable } from 'rxjs';
 import { ProductCategory } from '../common/product-category';
@@ -10,10 +11,15 @@ import { ProductCategory } from '../common/product-category';
 })
 export class CategoryService {
 
-  constructor(private fireStore: Firestore ) { }
+  private dbPath: string = '/categories';
 
-  getCategoryList(): Observable<ProductCategory[]> {
-    const categories = collection(this.fireStore, 'categories')
-    return collectionData(categories, { idField: 'id' })
+  categoriesRef: AngularFirestoreCollection<ProductCategory>; 
+  
+  constructor(private afs: AngularFirestore) { 
+    this.categoriesRef = afs.collection(this.dbPath);
+  }
+
+  getCategories(): AngularFirestoreCollection<ProductCategory> {
+    return this.categoriesRef;
   }
 }

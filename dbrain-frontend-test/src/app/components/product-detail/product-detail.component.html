@@ -4,7 +4,7 @@
 
         <h3>{{ product.title }}</h3>
         <div class="price">{{ product.price | currency:'USD' }}</div>
-        <a href="#" class="primary-btn">Add to cart</a>
+        <button (click)="addToCart()" class="btn btn-primary float-end">Buy</button>
 
         <hr>
         <h4>Description</h4>
