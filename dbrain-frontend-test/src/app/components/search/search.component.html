@@ -1,9 +1,9 @@
-<div class="input-group mb-4">
+<div class="input-group">
     <input  #myInput type="text" 
             class="form-control rounded" 
             placeholder="Find product by name" 
             aria-label="Search" 
             aria-describedby="search-addon"
             (keyup.enter)="doSearch(myInput.value)"/>
-    <button (click)="doSearch(myInput.value)" type="button" class="btn btn-outline-primary">Search</button>
+    <button (click)="doSearch(myInput.value)" type="button" class="btn btn-outline-dark">Search</button>
 </div>

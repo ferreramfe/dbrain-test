@@ -1,16 +1,19 @@
-<nav class="navbar navbar-light bg-light mb-4">
+<section class="header-main border-bottom bg-white overflow-hidden">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">DBrainTest</a>
-    <form class="d-flex">
-      <button class="btn btn-outline-success me-2" type="submit">SignIn</button>
-      <button class="btn btn-outline-success" type="submit">SignOut</button>
-    </form>
+    <div class="flex-row p-2 pt-3 pb-3 d-flex justify-content-between">
+      <div> <a class="navbar-brand" routerLink="/">DBrainTest</a> </div>
+      <div class="col-8">
+        <app-search></app-search>
+      </div>
+      <app-cart-status></app-cart-status>
+    </div>
   </div>
-</nav>
-<div class="row">
-  <app-search></app-search>
-  <app-product-category-list></app-product-category-list>
-</div>
+</section>
 <div class="container">
-  <router-outlet></router-outlet>
+  <div class="mt-4">
+    <app-product-category-list></app-product-category-list>
+  </div>
+  <div class="mt-2">
+    <router-outlet></router-outlet>
+  </div>
 </div>

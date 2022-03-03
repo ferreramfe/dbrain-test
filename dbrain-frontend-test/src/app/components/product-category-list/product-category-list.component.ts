@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { ProductCategory } from 'src/app/common/product-category';
 import { CategoryService } from 'src/app/services/category.service';
 
@@ -10,18 +12,27 @@ import { CategoryService } from 'src/app/services/category.service';
 export class ProductCategoryListComponent implements OnInit {
 
   productCategories?: ProductCategory[];
-  constructor(private categoryService: CategoryService) { }
+  showCategories?: boolean;
+  constructor(private categoryService: CategoryService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.listProductCategories();
   }
 
   listProductCategories() {
-    this.categoryService.getCategoryList().subscribe(
-      res => {
-        this.productCategories = res;
+    let route = this.route.snapshot.url.length;
+    this.categoryService.getCategories().snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => 
+          ({ id: c.payload.doc['id'], ...c.payload.doc.data() }))
+      )
+    ).subscribe(data=> {
+      if (route === 0) {
+        this.productCategories = data;        
+        this.showCategories = true;  
+      } else {
+        this.showCategories = false;
       }
-    )
+    });
   }
-
 }

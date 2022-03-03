@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(
     private productService: ProductService, 
+    private cartService: CartService,
     private route: ActivatedRoute
   ) { }
 
@@ -24,12 +28,19 @@ export class ProductDetailComponent implements OnInit {
   }
 
   handleProductDetail() {
-    const productId: string = this.route.snapshot.paramMap.get('id')!;
-    this.productService.getProductById(productId).subscribe(
-      data => {
-        this.product = data;
-      }
-    );
+    const productId: number = +this.route.snapshot.paramMap.get('id')!;
+    this.productService.getProductByProductId(productId).snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => 
+          ({ id: c.payload.doc['id'], ...c.payload.doc.data() }))
+      )
+    ).subscribe(data=> {
+      this.product = data[0];
+    })
   }
 
+  addToCart() {
+    const cartItem: CartItem = new CartItem(this.product);
+    this.cartService.addCartItem(cartItem);
+  }
 }

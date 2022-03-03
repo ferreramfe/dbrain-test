@@ -1,23 +1,23 @@
-<div class="row">
-    <div *ngFor="let product of products" class="col-sm-2 d-flex align-items-stretch">
-        <div class="card mb-3">
-            <a routerLink="/products/{{ product.id }}">
-                <img [src]="product.image" class="card-img-top" height="60%">
-            </a>
-            <div class="card-body">
-                <a routerLink="/products/{{ product.id }}">
-                    <h5 class="card-title">{{ product.title }}</h5>
-                </a>
-                <p class="card-text">{{ product.category }}</p>
-                <p class="card-text">{{ product.price | currency: 'USD' }}</p>
-            </div>
-            <div class="card-body">
-                <button class="btn btn-primary float-end">Buy</button>
+<div class="d-flex">
+    <!-- <h2 class="font-weight-bold mb-2">From the Shop</h2>
+    <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt.</p> -->
+
+    <div class="d-flex justify-content-start flex-wrap mb-4">
+        <div *ngFor="let product of products" class="d-flex align-items-stretch mx-auto">
+            <!-- Card-->
+            <div class="card rounded d-flex shadow-sm border-0 mb-3 ms-3 me-3 p-2">
+                <div class="card-body p-4">
+                    <a routerLink="/products/{{ product.id }}">
+                        <img [src]="product.image" alt="{{ product.title }}" class="img-fluid d-block mx-auto mb-3">
+                    </a>
+                    <h5> <a routerLink="/products/{{ product.id }}" class="text-dark">{{ product.title }}</a></h5>
+                    <p class="small text-muted font-italic"> {{ product.category }}
+                    </p>
+                </div>
+                <button (click)="addToCart(product, product.refId!)"
+                    class="btn btn-danger rounded-pill btn-block"><i class="fa fa-shopping-cart me-2"></i>Add to Cart</button>
             </div>
         </div>
-    </div>
-
-    <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
-        No Products Found
     </div>
 </div>
